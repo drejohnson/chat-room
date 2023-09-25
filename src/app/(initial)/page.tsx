@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { currentProfile } from "@/lib/current-profile";
 
-import { InitialModal } from "@/components/modal/initial-modal";
+import { InitialModal } from "@/components/modal/initial-create-room";
 
 export default async function SetupPage() {
   const profile = await currentProfile();

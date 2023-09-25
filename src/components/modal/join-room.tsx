@@ -4,6 +4,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import {
   Dialog,
@@ -22,17 +23,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import { toast } from "../ui/use-toast";
+import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Room name is required.",
+  id: z.string().min(1, {
+    message: "Room id is required.",
   }),
 });
 
-export const InitialModal = () => {
+export const JoinRoomModal = () => {
   const [isMounted, setIsMounted] = useState(false);
 
   const router = useRouter();
@@ -44,7 +46,7 @@ export const InitialModal = () => {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      id: "clmy94ojw0001a3vxi2mx2iv1",
     },
   });
 
@@ -52,7 +54,7 @@ export const InitialModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch("/api/rooms/create", {
+      const response = await fetch("/api/rooms/join", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,13 +63,11 @@ export const InitialModal = () => {
       });
 
       if (response.ok) {
-        form.reset();
-        router.refresh();
-        window.location.reload();
         toast({
           variant: "success",
-          description: "Your Room has been created",
+          description: `You joined room #${values.id}`,
         });
+        router.push(`/room/${values.id}`);
       } else {
         const { error } = await response.json();
         toast({
@@ -89,29 +89,25 @@ export const InitialModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Customize your room
+            Join a room
           </DialogTitle>
-          <DialogDescription className="text-center text-zinc-500">
-            Give your room a personality with a name and an image. You can
-            always change it later.
-          </DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
               <FormField
                 control={form.control}
-                name="name"
+                name="id"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Room name
+                      Room id
                     </FormLabel>
                     <FormControl>
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter room name"
+                        placeholder="Enter room id"
                         {...field}
                       />
                     </FormControl>
@@ -120,10 +116,18 @@ export const InitialModal = () => {
                 )}
               />
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button variant="default" disabled={isLoading}>
-                Create
-              </Button>
+            <DialogFooter className="px-6 py-4">
+              <div className="flex justify-between w-full ">
+                <Link
+                  className={cn(buttonVariants({ variant: "default" }))}
+                  href="/"
+                >
+                  Create a room
+                </Link>
+                <Button variant="default" disabled={isLoading}>
+                  Join a Room
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </Form>

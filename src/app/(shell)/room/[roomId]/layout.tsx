@@ -30,7 +30,7 @@ export default async function RoomLayout({
 
   return (
     <div className="h-full">
-      <div className="hidden md:flex h-full bg-gray-950 py-4 w-60 z-20 flex-col items-center fixed inset-y-0">
+      <div className="hidden md:flex items-start h-full dark:bg-gray-950 bg-primary/5 p-4 w-60 z-20 flex-col fixed inset-y-0">
         <UsersOnline />
       </div>
       <main className="h-full md:pl-60">{children}</main>
