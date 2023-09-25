@@ -1,4 +1,4 @@
-import { Room } from "@prisma/client";
+import type { ChatRoom } from "@prisma/client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
-export const LeaveRoomModal = ({ room }: { room: Room }) => {
+export const LeaveRoomModal = ({ room }: { room: ChatRoom }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 

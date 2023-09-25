@@ -1,6 +1,4 @@
 import { getAuthSession } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import { UserStatus } from "@prisma/client";
 import SignOut from "./sign-out";
 
 export default async function AuthStatus() {

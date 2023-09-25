@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { currentProfile } from "@/lib/current-profile";
 // import RoomSidebar from "@/components/room/sidebar";
 
-export default async function RoomIsayout({
+export default async function RoomLayout({
   children,
   params,
 }: {

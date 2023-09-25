@@ -2,15 +2,15 @@ import MessageField from "@/components/message-field";
 import Messages from "@/components/messages";
 import UsersOnline from "@/components/users-online";
 import prisma from "@/lib/prisma";
-import { Message } from "@prisma/client";
+import type { Message } from "@prisma/client";
 
-interface PageProps {
+const RoomPage = async ({
+  params,
+}: {
   params: {
     roomId: string;
   };
-}
-
-const page = async ({ params }: PageProps) => {
+}) => {
   const { roomId } = params;
   const existingMessages = await prisma.message.findMany({
     where: {
@@ -33,4 +33,4 @@ const page = async ({ params }: PageProps) => {
   );
 };
 
-export default page;
+export default RoomPage;

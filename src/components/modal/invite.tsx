@@ -1,4 +1,4 @@
-import { ChatRoom } from "@prisma/client";
+import type { ChatRoom } from "@prisma/client";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
