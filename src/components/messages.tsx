@@ -35,10 +35,10 @@ const Messages: FC<MessagesProps> = ({ initialMessages, roomId }) => {
 
   return (
     <div>
-      {initialMessages.map((message) => (
+      {initialMessages.map((message: { text: string; id: string }) => (
         <p key={message.id}>{message.text}</p>
       ))}
-      {incomingMessages.map((text, i) => (
+      {incomingMessages.map((text: string, i: number) => (
         <p key={i}>{text}</p>
       ))}
     </div>
