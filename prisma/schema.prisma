@@ -16,18 +16,29 @@ enum UserStatus {
 }
 
 model User {
-  id        String     @id @default(uuid())
+  id        String        @id @default(uuid())
   firstname String
   lastname  String
-  username  String     @unique
-  email     String     @unique
+  username  String        @unique
+  email     String        @unique
   password  String
   profile   Profile?
-  status    UserStatus @default(OFFLINE)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  status    UserStatus    @default(OFFLINE)
+  sessions  UserSession[]
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
 
   @@map("users")
+}
+
+model UserSession {
+  id          String    @id @default(uuid())
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  loggedInAt  DateTime  @default(now())
+  loggedOutAt DateTime?
+
+  @@map("userSessions")
 }
 
 model Profile {
