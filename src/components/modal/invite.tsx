@@ -1,4 +1,4 @@
-import type { ChatRoom } from "@prisma/client";
+// import type { ChatRoom } from "@prisma/client";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
-export const InviteModal = ({ room }: { room: ChatRoom }) => {
+export const InviteModal = ({ room }: { room: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
