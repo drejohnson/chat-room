@@ -2,7 +2,7 @@ import MessageField from "@/components/message-field";
 import Messages from "@/components/messages";
 import UsersOnline from "@/components/users-online";
 import prisma from "@/lib/prisma";
-import type { Message } from "@prisma/client";
+// import type { Message } from "@prisma/client";
 
 const RoomPage = async ({
   params,
@@ -18,7 +18,7 @@ const RoomPage = async ({
     },
   });
 
-  const serializedMessages = existingMessages.map((message: Message) => ({
+  const serializedMessages = existingMessages.map((message: any) => ({
     text: message.text,
     id: message.id,
   }));
