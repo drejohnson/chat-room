@@ -11,7 +11,7 @@ export default async function UsersOnline() {
   return (
     <>
       <div>users-online</div>
-      {usersByStatus.map((user: { id: string; username: string }) => {
+      {usersByStatus.map((user) => {
         return <div key={user.id}>{user.username}</div>;
       })}
     </>

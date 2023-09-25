@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const data = await req.text();
   const [socketId, channelName] = data
     .split("&")
-    .map((str: string) => str.split("=")[1]);
+    .map((str) => str.split("=")[1]);
 
   const id = nanoid();
 

@@ -11,8 +11,9 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { ChatRoom } from "@prisma/client";
 
-export const InviteModal = ({ room }: { room: any }) => {
+export const InviteModal = ({ room }: { room: ChatRoom }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
