@@ -24,11 +24,12 @@ const RoomPage = async ({
   }));
 
   return (
-    <div className="h-screen">
-      <p>messages:</p>
+    <div className="grid grid-rows-[auto_1fr_auto] h-screen">
+      <header className="dark:bg-[#1E1F22] bg-[#E3E5E8] py-6 px-4">
+        Messages:
+      </header>
       <Messages roomId={roomId} initialMessages={serializedMessages} />
       <MessageField roomId={roomId} />
-      <UsersOnline />
     </div>
   );
 };

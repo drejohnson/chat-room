@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 
 import prisma from "@/lib/prisma";
 import { currentProfile } from "@/lib/current-profile";
+import UsersOnline from "@/components/users-online";
 // import RoomSidebar from "@/components/room/sidebar";
 
 export default async function RoomLayout({
@@ -29,6 +30,9 @@ export default async function RoomLayout({
 
   return (
     <div className="h-full">
+      <div className="hidden md:flex h-full bg-gray-950 py-4 w-60 z-20 flex-col items-center fixed inset-y-0">
+        <UsersOnline />
+      </div>
       <main className="h-full md:pl-60">{children}</main>
     </div>
   );

@@ -1,7 +1,8 @@
 "use client";
 
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, Fragment } from "react";
 import { pusherClient } from "@/lib/pusher";
+import { Separator } from "./ui/separator";
 
 interface MessagesProps {
   initialMessages: {
@@ -34,12 +35,18 @@ const Messages: FC<MessagesProps> = ({ initialMessages, roomId }) => {
   }, [roomId]);
 
   return (
-    <div>
+    <div className="flex-1 flex flex-col p-4 overflow-y-auto">
       {initialMessages.map((message) => (
-        <p key={message.id}>{message.text}</p>
+        <Fragment key={message.id}>
+          <p className="py-6 px-4">{message.text}</p>
+          <Separator className="dark:bg-[#1E1F22] bg-[#E3E5E8]" />
+        </Fragment>
       ))}
       {incomingMessages.map((text, i) => (
-        <p key={i}>{text}</p>
+        <Fragment key={i}>
+          <p className="py-6 px-4">{text}</p>
+          <Separator className="dark:bg-[#1E1F22] bg-[#E3E5E8]" />
+        </Fragment>
       ))}
     </div>
   );

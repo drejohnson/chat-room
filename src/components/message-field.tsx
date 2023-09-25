@@ -43,7 +43,7 @@ const MessageField: FC<MessageFieldProps> = ({ roomId }) => {
   };
 
   return (
-    <div className="flex gap-2">
+    <div className="w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
