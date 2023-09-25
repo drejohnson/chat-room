@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ONLINE
+  OFFLINE
+}
+
+model User {
+  id        String     @id @default(uuid())
+  firstname String
+  lastname  String
+  username  String     @unique
+  email     String     @unique
+  password  String
+  profile   Profile?
+  status    UserStatus @default(OFFLINE)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("users")
+}
+
+model Profile {
+  id     String  @id @default(uuid())
+  userId String  @unique
+  name   String?
+  bio    String? // Add additional profile information as needed
+  avatar String? // Store the URL of the user's profile picture
+  status String? // User's status message
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rooms   ChatRoom[]
+  members Member[]
+
+  // Define a one-to-one relationship with the User model
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model ChatRoom {
+  id       String    @id @default(cuid())
+  name     String
+  messages Message[]
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  members Member[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("chatRooms")
+}
+
+enum MemberRole {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member {
+  id   String     @id @default(uuid())
+  role MemberRole @default(GUEST)
+
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  roomId String
+  room   ChatRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  text       String
+  chatRoomId String
+  chatRoom   ChatRoom @relation(fields: [chatRoomId], references: [id])
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("messages")
+}
